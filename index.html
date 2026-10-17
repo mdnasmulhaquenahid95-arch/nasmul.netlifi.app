@@ -716,15 +716,14 @@ if (SpeechRecognition) {
         micIcon.addEventListener('click', () => {
              recognition.start();
         });
-    }
-
     recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
         searchInput.value = transcript;
-        // Trigger your search function automatically
-        triggerMicSearch(); 
-    };
-
+      recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    searchInput.value = transcript;
+    quickSearch(transcript);
+};
     recognition.onerror = (event) => {
         console.error('Speech recognition error', event.error);
     };
