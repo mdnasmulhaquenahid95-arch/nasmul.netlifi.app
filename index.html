@@ -674,14 +674,11 @@
             document.getElementById('main-search-input').value = quer):
 // Search Logic Implementation - filter page content
 const elementsToSearch = document.querySelectorAll('h4, p, span'); // Adjust selectors for items to be searched
-elementsToSearch.forEach(element => {
-    const text = element.textContent.toLowerCase();
+elementsToSearch.forEach(element = const text = element.textContent.toLowerCase();
     const isVisible = text.includes(query.toLowerCase());
     // Hide parent container if element doesn't match
     element.parentElement.style.display = isVisible ? '' : 'none';
-});
-
-        function triggerMicSearch() { alert('ভয়েস সার্চ চালু হচ্ছে... অনুগ্রহ করে কথা বলুন।'); }
+});  function triggerMicSearch() { alert('ভয়েস সার্চ চালু হচ্ছে... অনুগ্রহ করে কথা বলুন।'); }
         function triggerCameraSearch() { alert('ক্যামেরা স্ক্যানার চালু হচ্ছে...'); }
 
         // AI Creator
@@ -695,7 +692,6 @@ elementsToSearch.forEach(element => {
         function openChatBox(name) {
             alert(`${name}-এর সাথে চ্যাট উইন্ডো খোলা হচ্ছে...`);
         }
-
 // Voice Search Implementation
 const searchInput = document.getElementById('main-search-input');
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
