@@ -688,10 +688,40 @@
             resultBox.innerHTML = `<b>এআই জেনারেটেড ফলাফল:</b> "${prompt}" বিষয়ের ওপর ভিত্তি করে চমৎকার কন্টেন্ট এবং আইডিয়া প্রস্তুত করা হয়েছে। নাজমুল ক্রিয়েটর স্টুডিওর সাহায্যে এটি এখন ফেসবুকে শেয়ার করতে পারেন!`;
             resultBox.classList.remove('hidden');
         }
-
         function openChatBox(name) {
             alert(`${name}-এর সাথে চ্যাট উইন্ডো খোলা হচ্ছে...`);
         }
+
+// Voice Search Implementation
+const searchInput = document.getElementById('main-search-input');
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'bn-BD';
+    recognition.interimResults = false;
+
+    // Assuming you have a microphone icon element, let's call it micIcon
+    const micIcon = document.querySelector('.fa-microphone'); // Adjust selector as needed
+
+    if(micIcon) {
+        micIcon.addEventListener('click', () => {
+             recognition.start();
+        });
+    }
+
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        searchInput.value = transcript;
+        // Trigger your search function automatically
+        triggerMicSearch(); 
+    };
+
+    recognition.onerror = (event) => {
+        console.error('Speech recognition error', event.error);
+    };
+}
+
 
         window.onload = function() {
             updateUIProfileInfo();
