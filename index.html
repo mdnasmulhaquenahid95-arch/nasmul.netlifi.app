@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নাজমুল - Nazmul Workspace & Social</title>
+    <meta name="description" content="নাজমুল - Nazmul Workspace & Social: নাজমুলের ব্যক্তিগত ওয়ার্কস্পেস ও সোশ্যাল প্ল্যাটফর্ম।">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://nasmul.netlify.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="নাজমুল - Nazmul Workspace & Social">
+    <meta property="og:description" content="নাজমুলের ব্যক্তিগত ওয়ার্কস্পেস ও সোশ্যাল প্ল্যাটফর্ম।">
+    <meta property="og:url" content="https://nasmul.netlify.app/">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+        }
+        /* Hide scrollbars for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col pb-20 md:pb-0">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 px-4 py-3 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-3">
+            <button onclick="toggleMenuDrawer()" class="p-2 hover:bg-gray-100 rounded-full text-gray-700 transition">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                নাজমুল
+            </h1>
+        </div>
+        
+        <div class="flex items-center space-x-2">
+            <button onclick="switchTab('notifications')" class="relative p-2 hover:bg-gray-100 rounded-full text-gray-700 transition">
+                <i class="fa-solid fa-bell text-xl"></i>
+                <span class="absolute top-1 right-1 bg-red-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-bold">৩</span>
+            </button>
+            <div onclick="openProfileSwitcherModal()" class="cursor-pointer flex items-center space-x-2 p-1 hover:bg-gray-100 rounded-full transition">
+                <img id="header-user-avatar" src="https://placehold.co/40x40/3b82f6/ffffff?text=N" class="w-9 h-9 rounded-full object-cover border-2 border-blue-500" alt="Profile">
+            </div>
+        </div>
+    </header>
+
+    <div id="menu-drawer" class="fixed inset-0 z-50 bg-black/50 hidden transition-opacity opacity-0" onclick="toggleMenuDrawer()">
+        <div id="drawer-content" class="absolute left-0 top-0 bottom-0 w-80 bg-white shadow-2xl p-5 flex flex-col transform -translate-x-full transition-transform duration-300" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between pb-4 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <img id="drawer-avatar" src="https://placehold.co/50x50/3b82f6/ffffff?text=N" class="w-12 h-12 rounded-full object-cover border" alt="User">
+                    <div>
+                        <h3 id="drawer-name" class="font-bold text-gray-900">নাজমুল ইসলাম</h3>
+                        <p id="drawer-email" class="text-xs text-gray-500">nazmul@example.com</p>
+                    </div>
+                </div>
+                <button onclick="toggleMenuDrawer()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <div class="py-4 border-b border-gray-200">
+                <button onclick="openProfileSwitcherModal(); toggleMenuDrawer();" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold py-2 px-4 rounded-xl text-sm transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-users"></i>
+                    <span>প্রোফাইল পরিবর্তন বা নতুন যোগ করুন</span>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto py-4 space-y-2">
+                <a href="#" onclick="switchTab('home'); toggleMenuDrawer();" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-xl text-gray-700 font-medium">
+                    <i class="fa-solid fa-house text-blue-600 w-6"></i><span>হোম পেজ</span>
+                </a>
+                <a href="#" onclick="switchTab('profile'); toggleMenuDrawer();" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-xl text-gray-700 font-medium">
+                    <i class="fa-solid fa-user text-purple-600 w-6"></i><span>আমার ফেসবুক প্রোফাইল</span>
+                </a>
+                <a href="#" onclick="switchTab('search'); toggleMenuDrawer();" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-xl text-gray-700 font-medium">
+                    <i class="fa-solid fa-magnifying-glass text-green-600 w-6"></i><span>গুগল সার্চ ও ব্রাউজার</span>
+                </a>
+                <a href="#" onclick="switchTab('ai-creator'); toggleMenuDrawer();" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-xl text-gray-700 font-medium">
+                    <i class="fa-solid fa-wand-magic-sparkles text-pink-600 w-6"></i><span>AI ক্রিয়েটর স্টুডিও</span>
+                </a>
+                <a href="#" onclick="switchTab('chat'); toggleMenuDrawer();" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-xl text-gray-700 font-medium">
+                    <i class="fa-solid fa-comments text-amber-600 w-6"></i><span>মেসেজিং চ্যাট</span>
+                </a>
+                <a href="#" onclick="switchTab('notifications'); toggleMenuDrawer();" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-xl text-gray-700 font-medium">
+                    <i class="fa-solid fa-bell text-red-600 w-6"></i><span>বিজ্ঞপ্তি সমূহ</span>
+                </a>
+            </div>
+
+            <div class="pt-4 border-t border-gray-200 text-center text-xs text-gray-400">
+                নাজমুল প্ল্যাটফর্ম v2.5 &copy; ২০২৬
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto p-3 md:p-6 mb-16">
+
+        <!-- TAB 1: HOME & SEARCH DASHBOARD -->
+        <div id="tab-home" class="space-y-6">
+            <!-- Weather & Info Widget -->
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-3xl p-5 shadow-lg flex items-center justify-between">
+                <div>
+                    <span class="text-xs uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full">আজকের আপডেট</span>
+                    <h2 class="text-2xl font-bold mt-2">ঢাকা, বাংলাদেশ</h2>
+                    <p class="text-sm opacity-90 mt-1">রৌদ্রোজ্জ্বল • তাপমাত্রা ২৫°C • বায়ুর গুণমান ভালো</p>
+                </div>
+                <div class="text-right">
+                    <i class="fa-solid fa-cloud-sun text-5xl opacity-90"></i>
+                    <p class="text-xs mt-2 opacity-80">বুধবার, ৩০ মার্চ</p>
+                </div>
+            </div>
+
+            <!-- Central Google-style Search Box -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 flex flex-col items-center">
+                <h2 class="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-600 via-red-500 to-yellow-500 bg-clip-text text-transparent">
+                    নাজমুল সার্চ
+                </h2>
+                
+                <div class="w-full relative flex items-center">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 text-gray-400 text-lg"></i>
+                    <input type="text" id="main-search-input" placeholder="কী খুঁজতে চান এখানে লিখুন..." class="w-full pl-12 pr-24 py-4 bg-gray-50 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white text-gray-800 transition shadow-inner">
+                    <div class="absolute right-3 flex items-center space-x-2">
+                        <button onclick="triggerMicSearch()" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-100 rounded-full transition" title="মুখে বলুন">
+                            <i class="fa-solid fa-microphone text-lg"></i>
+                        </button>
+                        <button onclick="triggerCameraSearch()" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-gray-100 rounded-full transition" title="ছবি দিয়ে খুঁজুন">
+                            <i class="fa-solid fa-camera text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mt-4 justify-center">
+                    <button onclick="quickSearch('সর্বশেষ খবর')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-4 py-2 rounded-full transition">📰 সর্বশেষ খবর</button>
+                    <button onclick="quickSearch('প্রযুক্তি ট্রেন্ড')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-4 py-2 rounded-full transition">💻 প্রযুক্তি</button>
+                    <button onclick="quickSearch('এআই অ্যাসিস্ট্যান্ট')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-4 py-2 rounded-full transition">🤖 এআই চ্যাট</button>
+                    <button onclick="quickSearch('বিনোদন')" class="bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs px-4 py-2 rounded-full transition">🎬 বিনোদন</button>
+                </div>
+            </div>
+
+            <!-- Horizontal Feeds Section -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-bold text-lg text-gray-800">আজকের আলোচিত বিষয়</h3>
+                    <span class="text-xs text-blue-600 font-semibold cursor-pointer">সব দেখুন</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center space-x-4 hover:shadow-md transition cursor-pointer">
+                        <img src="https://placehold.co/100x100/e2e8f0/1e293b?text=News" class="w-20 h-20 rounded-xl object-cover" alt="News">
+                        <div>
+                            <span class="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-md font-medium">প্রযুক্তি</span>
+                            <h4 class="font-bold text-gray-800 text-sm mt-1">কৃত্রিম বুদ্ধিমত্তার নতুন বিপ্লব ২০২৬</h4>
+                            <p class="text-xs text-gray-500 mt-1">৩ ঘণ্টা আগে প্রকাশিত</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center space-x-4 hover:shadow-md transition cursor-pointer">
+                        <img src="https://placehold.co/100x100/e2e8f0/1e293b?text=Tech" class="w-20 h-20 rounded-xl object-cover" alt="News">
+                        <div>
+                            <span class="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-md font-medium">ইনোভেশন</span>
+                            <h4 class="font-bold text-gray-800 text-sm mt-1">নাজমুল প্ল্যাটফর্মের নতুন আপডেট</h4>
+                            <p class="text-xs text-gray-500 mt-1">৫ ঘণ্টা আগে প্রকাশিত</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: FACEBOOK-STYLE PROFILE PAGE -->
+        <div id="tab-profile" class="space-y-6 hidden">
+            <!-- Cover Photo & Profile Header -->
+            <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="relative h-48 md:h-72 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+                    <img id="profile-cover-img" src="https://placehold.co/1200x400/3b82f6/ffffff?text=Cover+Photo" class="w-full h-full object-cover" alt="Cover">
+                    <button onclick="triggerCoverUpload()" class="absolute bottom-4 right-4 bg-black/60 hover:bg-black/80 text-white text-xs font-semibold px-3 py-1.5 rounded-xl backdrop-blur-md transition flex items-center space-x-1">
+                        <i class="fa-solid fa-camera"></i><span>কভার পরিবর্তন করুন</span>
+                    </button>
+                    <input type="file" id="cover-file-input" class="hidden" accept="image/*" onchange="handleCoverUpload(event)">
+                </div>
+
+                <div class="px-6 pb-6 relative">
+                    <div class="flex flex-col md:flex-row items-center md:items-end justify-between -mt-16 md:-mt-20 mb-4 space-y-4 md:space-y-0">
+                        <div class="flex flex-col md:flex-row items-center md:items-end space-y-3 md:space-y-0 md:space-x-5 text-center md:text-left">
+                            <div class="relative group">
+                                <img id="profile-avatar-img" src="https://placehold.co/150x150/3b82f6/ffffff?text=Nazmul" class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-lg bg-white" alt="Avatar">
+                                <button onclick="triggerAvatarUpload()" class="absolute bottom-2 right-2 bg-gray-800 hover:bg-gray-900 text-white p-2.5 rounded-full shadow-md transition">
+                                    <i class="fa-solid fa-camera text-sm"></i>
+                                </button>
+                                <input type="file" id="avatar-file-input" class="hidden" accept="image/*" onchange="handleAvatarUpload(event)">
+                            </div>
+                            <div>
+                                <h2 id="profile-display-name" class="text-2xl font-bold text-gray-900">নাজমুল ইসলাম</h2>
+                                <p id="profile-display-bio" class="text-sm text-gray-500 mt-1">সফটওয়্যার ইঞ্জিনিয়ার ও টেক অ্যান্থুসিয়াস্ট 🚀</p>
+                                <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-user-group mr-1"></i> ১.৫ হাজার বন্ধু • ৫০০ ফলোয়ার</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button onclick="openEditProfileModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-xl text-sm transition flex items-center space-x-2">
+                                <i class="fa-solid fa-pen-to-square"></i><span>প্রোফাইল এডিট</span>
+                            </button>
+                            <button onclick="openProfileSwitcherModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl text-sm transition flex items-center space-x-2">
+                                <i class="fa-solid fa-right-left"></i><span>একাউন্ট সুইচ</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create Post Box (Facebook Style) -->
+            <div class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100">
+                <div class="flex items-center space-x-3 pb-3 border-b border-gray-100">
+                    <img id="post-creator-avatar" src="https://placehold.co/40x40/3b82f6/ffffff?text=N" class="w-10 h-10 rounded-full object-cover" alt="User">
+                    <input type="text" placeholder="আপনার মনে কি কিছু চলছে, নাজমুল?" onclick="openCreatePostModal()" readonly class="w-full bg-gray-100 hover:bg-gray-200 rounded-full px-4 py-2.5 text-sm cursor-pointer text-gray-700 transition">
+                </div>
+                <div class="flex justify-between pt-3 px-2">
+                    <button onclick="openCreatePostModal()" class="flex items-center space-x-2 text-red-500 text-sm font-medium hover:bg-red-50 px-3 py-1.5 rounded-xl transition">
+                        <i class="fa-solid fa-video"></i><span>লাইভ ভিডিও</span>
+                    </button>
+                    <button onclick="openCreatePostModal()" class="flex items-center space-x-2 text-green-500 text-sm font-medium hover:bg-green-50 px-3 py-1.5 rounded-xl transition">
+                        <i class="fa-solid fa-images"></i><span>ছবি/ভিডিও</span>
+                    </button>
+                    <button onclick="openCreatePostModal()" class="flex items-center space-x-2 text-amber-500 text-sm font-medium hover:bg-amber-50 px-3 py-1.5 rounded-xl transition">
+                        <i class="fa-solid fa-face-smile"></i><span>অনুভূতি/কার্যকলাপ</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- User Posts Stream -->
+            <div id="posts-container" class="space-y-4">
+                <!-- Sample Post 1 -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <img id="post-item-avatar" src="https://placehold.co/40x40/3b82f6/ffffff?text=N" class="w-10 h-10 rounded-full object-cover" alt="User">
+                            <div>
+                                <h4 id="post-item-name" class="font-bold text-gray-900 text-sm">নাজমুল ইসলাম</h4>
+                                <p class="text-xs text-gray-400">২ ঘণ্টা আগে • <i class="fa-solid fa-earth-americas"></i></p>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                    </div>
+                    <p class="text-gray-800 text-sm mb-3">আজকে আমাদের নতুন প্রজেক্টের কাজ সফলভাবে শেষ হলো! আলহামদুলিল্লাহ। 🚀✨</p>
+                    <div class="bg-gray-100 rounded-2xl overflow-hidden mb-3">
+                        <img src="https://placehold.co/600x300/3b82f6/ffffff?text=Nazmul+Project+Success" class="w-full h-auto object-cover" alt="Post Image">
+                    </div>
+                    <div class="flex items-center justify-between text-gray-500 text-xs border-t border-b border-gray-100 py-2 my-2">
+                        <span>👍 ২৪৫ জন লাইক করেছেন</span>
+                        <span>১২টি কমেন্ট • ৪টি শেয়ার</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="toggleLike(this)" class="flex-1 flex items-center justify-center space-x-2 py-2 hover:bg-gray-100 rounded-xl text-gray-600 font-medium text-sm transition">
+                            <i class="fa-regular fa-thumbs-up"></i><span>লাইক</span>
+                        </button>
+                        <button class="flex-1 flex items-center justify-center space-x-2 py-2 hover:bg-gray-100 rounded-xl text-gray-600 font-medium text-sm transition">
+                            <i class="fa-regular fa-comment"></i><span>কমেন্ট</span>
+                        </button>
+                        <button class="flex-1 flex items-center justify-center space-x-2 py-2 hover:bg-gray-100 rounded-xl text-gray-600 font-medium text-sm transition">
+                            <i class="fa-solid fa-share"></i><span>শেয়ার</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: AI CREATOR STUDIO -->
+        <div id="tab-ai-creator" class="space-y-6 hidden">
+            <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-3xl p-6 shadow-lg">
+                <span class="bg-white/20 text-xs font-semibold px-3 py-1 rounded-full uppercase">এডভান্সড এআই</span>
+                <h2 class="text-2xl font-bold mt-2">নাজমুল ক্রিয়েটর স্টুডিও</h2>
+                <p class="text-sm opacity-90 mt-1">কৃত্রিম বুদ্ধিমত্তা ব্যবহার করে কন্টেন্ট, লেখা এবং আকর্ষণীয় ছবি তৈরি করুন।</p>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 space-y-4">
+                <h3 class="font-bold text-lg text-gray-800">এআই প্রম্পট জেনারেটর</h3>
+                <textarea id="ai-prompt-input" rows="3" placeholder="আপনি কী তৈরি করতে চান তা বাংলায় বা ইংরেজিতে লিখুন (যেমন: একটি সুন্দর ল্যান্ডস্কেপ বা একটি কবিতা)..." class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"></textarea>
+                <div class="flex justify-end space-x-3">
+                    <button onclick="generateAIContent()" class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition flex items-center space-x-2 shadow-md">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i><span>জেনারেট করুন</span>
+                    </button>
+                </div>
+                <div id="ai-result-box" class="hidden mt-4 p-4 bg-purple-50 border border-purple-100 rounded-2xl text-purple-900 text-sm">
+                    <!-- Result goes here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: CHAT / MESSAGING -->
+        <div id="tab-chat" class="space-y-4 hidden">
+            <div class="bg-white rounded-3xl p-4 shadow-sm border border-gray-100">
+                <h2 class="text-xl font-bold text-gray-900 mb-3">মেসেজিং ও চ্যাট</h2>
+                <div class="space-y-2">
+                    <div onclick="openChatBox('রহিম আহমেদ')" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-2xl cursor-pointer transition">
+                        <img src="https://placehold.co/50x50/3b82f6/ffffff?text=R" class="w-12 h-12 rounded-full object-cover" alt="User">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-sm text-gray-900">রহিম আহমেদ</h4>
+                                <span class="text-xs text-gray-400">১০:৩০ AM</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-0.5">কেমন আছো নাজমুল ভাই?</p>
+                        </div>
+                        <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
+                    </div>
+                    <div onclick="openChatBox('করিম উদ্দিন')" class="flex items-center space-x-3 p-3 hover:bg-gray-100 rounded-2xl cursor-pointer transition">
+                        <img src="https://placehold.co/50x50/10b981/ffffff?text=K" class="w-12 h-12 rounded-full object-cover" alt="User">
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-sm text-gray-900">করিম উদ্দিন</h4>
+                                <span class="text-xs text-gray-400">গতকাল</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-0.5">প্রজেক্টের ফাইলটি পাঠিয়ে দিয়েছি।</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: NOTIFICATIONS -->
+        <div id="tab-notifications" class="space-y-4 hidden">
+            <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
+                <h2 class="text-xl font-bold text-gray-900 mb-4">বিজ্ঞপ্তি সমূহ</h2>
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3 p-3 bg-blue-50/50 rounded-2xl">
+                        <div class="bg-blue-500 text-white p-2.5 rounded-full"><i class="fa-solid fa-thumbs-up text-sm"></i></div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800"><b>রহিম আহমেদ</b> এবং আরও ২৪ জন আপনার পোস্টে লাইক দিয়েছেন।</p>
+                            <span class="text-xs text-gray-400 mt-1 block">১০ মিনিট আগে</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-2xl transition">
+                        <div class="bg-purple-500 text-white p-2.5 rounded-full"><i class="fa-solid fa-comment text-sm"></i></div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800"><b>করিম উদ্দিন</b> আপনার ছবিতে একটি মন্তব্য করেছেন।</p>
+                            <span class="text-xs text-gray-400 mt-1 block">১ ঘণ্টা আগে</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40 px-4 py-2 flex items-center justify-around shadow-lg">
+        <button onclick="switchTab('home')" id="nav-btn-home" class="flex flex-col items-center text-blue-600 transition">
+            <i class="fa-solid fa-house text-xl"></i>
+            <span class="text-[10px] mt-1 font-semibold">হোম</span>
+        </button>
+        <button onclick="switchTab('search')" id="nav-btn-search" class="flex flex-col items-center text-gray-500 hover:text-blue-600 transition">
+            <i class="fa-solid fa-magnifying-glass text-xl"></i>
+            <span class="text-[10px] mt-1 font-medium">অনুসন্ধান</span>
+        </button>
+        <button onclick="openCreatePostModal()" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transform -translate-y-2 hover:scale-105 transition">
+            <i class="fa-solid fa-plus text-xl"></i>
+        </button>
+        <button onclick="switchTab('ai-creator')" id="nav-btn-ai-creator" class="flex flex-col items-center text-gray-500 hover:text-blue-600 transition">
+            <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+            <span class="text-[10px] mt-1 font-medium">এআই স্টুডিও</span>
+        </button>
+        <button onclick="switchTab('profile')" id="nav-btn-profile" class="flex flex-col items-center text-gray-500 hover:text-blue-600 transition">
+            <i class="fa-solid fa-user text-xl"></i>
+            <span class="text-[10px] mt-1 font-medium">প্রোফাইল</span>
+        </button>
+    </nav>
+
+    <div id="profile-switcher-modal" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                <h3 class="font-bold text-lg text-gray-900">প্রোফাইল অ্যাকাউন্টসমূহ</h3>
+                <button onclick="closeProfileSwitcherModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            
+            <div id="profiles-list-container" class="space-y-3 max-h-60 overflow-y-auto">
+                <!-- Dynamically populated profiles -->
+            </div>
+
+            <div class="pt-3 border-t border-gray-100">
+                <button onclick="openAddNewProfileForm()" class="w-full bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold py-3 rounded-2xl text-sm transition flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-user-plus"></i><span>নতুন প্রোফাইল তৈরি করুন</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-profile-modal" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                <h3 class="font-bold text-lg text-gray-900">নতুন প্রোফাইল যোগ করুন</h3>
+                <button onclick="closeAddNewProfileForm()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">প্রোফাইলের নাম</label>
+                    <input type="text" id="new-p-name" placeholder="পূর্ণ নাম লিখুন..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">বায়ো / পেশা</label>
+                    <input type="text" id="new-p-bio" placeholder="আপনার পেশা বা সংক্ষিপ্ত বিবরণ..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">প্রোফাইল ছবির লিংক (বা ডিফল্ট)</label>
+                    <input type="text" id="new-p-avatar" placeholder="https://..." class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" value="https://placehold.co/150x150/3b82f6/ffffff?text=User">
+                </div>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeAddNewProfileForm()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-semibold transition">বাতিল</button>
+                <button onclick="saveNewProfile()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition">তৈরি করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-profile-modal" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                <h3 class="font-bold text-lg text-gray-900">প্রোফাইল এডিট করুন</h3>
+                <button onclick="closeEditProfileModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">নাম</label>
+                    <input type="text" id="edit-input-name" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">বায়ো</label>
+                    <input type="text" id="edit-input-bio" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            <div class="flex justify-end space-x-2 pt-2">
+                <button onclick="closeEditProfileModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm font-semibold transition">বাতিল</button>
+                <button onclick="saveEditedProfile()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition">সংরক্ষণ করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="create-post-modal" class="fixed inset-0 z-50 bg-black/60 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                <h3 class="font-bold text-lg text-gray-900">পোস্ট তৈরি করুন</h3>
+                <button onclick="closeCreatePostModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div class="flex items-center space-x-3">
+                <img id="modal-user-avatar" src="https://placehold.co/40x40/3b82f6/ffffff?text=N" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
+                <div>
+                    <h4 id="modal-user-name" class="font-bold text-sm text-gray-900">নাজমুল ইসলাম</h4>
+                    <span class="text-xs bg-gray-100 px-2 py-0.5 rounded text-gray-600"><i class="fa-solid fa-earth-americas"></i> পাবলিক</span>
+                </div>
+            </div>
+            <textarea id="new-post-text" rows="4" placeholder="আপনার মনে কি কিছু চলছে, নাজমুল?" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            <div class="flex items-center justify-between border border-gray-200 p-3 rounded-2xl">
+                <span class="text-xs font-semibold text-gray-600">পোস্টে সংযুক্তি যুক্ত করুন</span>
+                <div class="flex space-x-3 text-lg text-gray-600">
+                    <button class="hover:text-green-600"><i class="fa-solid fa-image"></i></button>
+                    <button class="hover:text-blue-600"><i class="fa-solid fa-user-tag"></i></button>
+                    <button class="hover:text-amber-600"><i class="fa-solid fa-face-smile"></i></button>
+                </div>
+            </div>
+            <button onclick="submitNewPost()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-2xl text-sm transition shadow-md">পোস্ট করুন</button>
+        </div>
+    </div>
+
+    <script>
+        // Default Multi-Profile State Management
+        let profiles = [
+            { id: '1', name: 'নাজমুল ইসলাম', bio: 'সফটওয়্যার ইঞ্জিনিয়ার ও টেক অ্যান্থুসিয়াস্ট 🚀', avatar: 'https://placehold.co/150x150/3b82f6/ffffff?text=Nazmul', cover: 'https://placehold.co/1200x400/3b82f6/ffffff?text=Nazmul+Cover' },
+            { id: '2', name: 'নাজমুল টেক প্রো', bio: 'অফিসিয়াল গ্যাজেট ও কোডিং পেজ 💻', avatar: 'https://placehold.co/150x150/8b5cf6/ffffff?text=Tech', cover: 'https://placehold.co/1200x400/8b5cf6/ffffff?text=Tech+Cover' }
+        ];
+        let currentProfileId = '1';
+
+        function getCurrentProfile() {
+            return profiles.find(p => p.id === currentProfileId) || profiles[0];
+        }
+
+        function updateUIProfileInfo() {
+            const p = getCurrentProfile();
+            document.getElementById('header-user-avatar').src = p.avatar;
+            document.getElementById('drawer-avatar').src = p.avatar;
+            document.getElementById('drawer-name').innerText = p.name;
+            document.getElementById('profile-avatar-img').src = p.avatar;
+            document.getElementById('profile-cover-img').src = p.cover;
+            document.getElementById('profile-display-name').innerText = p.name;
+            document.getElementById('profile-display-bio').innerText = p.bio;
+            document.getElementById('post-creator-avatar').src = p.avatar;
+            document.getElementById('post-item-avatar').src = p.avatar;
+            document.getElementById('post-item-name').innerText = p.name;
+            document.getElementById('modal-user-avatar').src = p.avatar;
+            document.getElementById('modal-user-name').innerText = p.name;
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            const tabs = ['home', 'profile', 'ai-creator', 'chat', 'notifications'];
+            tabs.forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (el) el.classList.add('hidden');
+                const navBtn = document.getElementById(`nav-btn-${t}`);
+                if (navBtn) navBtn.classList.replace('text-blue-600', 'text-gray-500');
+            });
+
+            const activeEl = document.getElementById(`tab-${tabName}`);
+            if (activeEl) activeEl.classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-btn-${tabName}`);
+            if (activeNav) activeNav.classList.replace('text-gray-500', 'text-blue-600');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Drawer Toggle
+        function toggleMenuDrawer() {
+            const drawer = document.getElementById('menu-drawer');
+            const content = document.getElementById('drawer-content');
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                setTimeout(() => {
+                    drawer.classList.remove('opacity-0');
+                    content.classList.remove('-translate-x-full');
+                }, 10);
+            } else {
+                drawer.classList.add('opacity-0');
+                content.classList.add('-translate-x-full');
+                setTimeout(() => drawer.classList.add('hidden'), 300);
+            }
+        }
+
+        // Profile Switcher Modal
+        function openProfileSwitcherModal() {
+            const container = document.getElementById('profiles-list-container');
+            container.innerHTML = '';
+            profiles.forEach(p => {
+                const isCurrent = p.id === currentProfileId;
+                container.innerHTML += `
+                    <div onclick="switchActiveProfile('${p.id}')" class="flex items-center justify-between p-3 rounded-2xl cursor-pointer transition ${isCurrent ? 'bg-blue-50 border border-blue-200' : 'hover:bg-gray-50 border border-gray-100'}">
+                        <div class="flex items-center space-x-3">
+                            <img src="${p.avatar}" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-bold text-sm text-gray-900">${p.name}</h4>
+                                <p class="text-xs text-gray-500">${p.bio}</p>
+                            </div>
+                        </div>
+                        ${isCurrent ? '<span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full font-semibold">সক্রিয়</span>' : ''}
+                    </div>
+                `;
+            });
+            document.getElementById('profile-switcher-modal').classList.remove('hidden');
+        }
+
+        function closeProfileSwitcherModal() {
+            document.getElementById('profile-switcher-modal').classList.add('hidden');
+        }
+
+        function switchActiveProfile(id) {
+            currentProfileId = id;
+            updateUIProfileInfo();
+            closeProfileSwitcherModal();
+        }
+
+        // Add New Profile
+        function openAddNewProfileForm() {
+            closeProfileSwitcherModal();
+            document.getElementById('add-profile-modal').classList.remove('hidden');
+        }
+        function closeAddNewProfileForm() {
+            document.getElementById('add-profile-modal').classList.add('hidden');
+        }
+        function saveNewProfile() {
+            const name = document.getElementById('new-p-name').value.trim();
+            const bio = document.getElementById('new-p-bio').value.trim();
+            const avatar = document.getElementById('new-p-avatar').value.trim();
+            if (!name) return alert('অনুগ্রহ করে নাম লিখুন।');
+
+            const newId = Date.now().toString();
+            profiles.push({ id: newId, name, bio: bio || 'নতুন প্রোফাইল', avatar: avatar || 'https://placehold.co/150x150/3b82f6/ffffff?text=User', cover: 'https://placehold.co/1200x400/3b82f6/ffffff?text=Cover' });
+            currentProfileId = newId;
+            updateUIProfileInfo();
+            closeAddNewProfileForm();
+        }
+
+        // Edit Profile
+        function openEditProfileModal() {
+            const p = getCurrentProfile();
+            document.getElementById('edit-input-name').value = p.name;
+            document.getElementById('edit-input-bio').value = p.bio;
+            document.getElementById('edit-profile-modal').classList.remove('hidden');
+        }
+        function closeEditProfileModal() {
+            document.getElementById('edit-profile-modal').classList.add('hidden');
+        }
+        function saveEditedProfile() {
+            const name = document.getElementById('edit-input-name').value.trim();
+            const bio = document.getElementById('edit-input-bio').value.trim();
+            const p = getCurrentProfile();
+            if (name) p.name = name;
+            if (bio) p.bio = bio;
+            updateUIProfileInfo();
+            closeEditProfileModal();
+        }
+
+        // Custom Cover & Avatar Uploads simulation
+        function triggerCoverUpload() { document.getElementById('cover-file-input').click(); }
+        function handleCoverUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                getCurrentProfile().cover = url;
+                document.getElementById('profile-cover-img').src = url;
+            }
+        }
+
+        function triggerAvatarUpload() { document.getElementById('avatar-file-input').click(); }
+        function handleAvatarUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                getCurrentProfile().avatar = url;
+                updateUIProfileInfo();
+            }
+        }
+
+        // Post creation
+        function openCreatePostModal() { document.getElementById('create-post-modal').classList.remove('hidden'); }
+        function closeCreatePostModal() { document.getElementById('create-post-modal').classList.add('hidden'); }
+        function submitNewPost() {
+            const text = document.getElementById('new-post-text').value.trim();
+            if (!text) return alert('কিছু লিখে পোস্ট করুন।');
+            const p = getCurrentProfile();
+            const container = document.getElementById('posts-container');
+            const newPostHTML = `
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-gray-100">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <img src="${p.avatar}" class="w-10 h-10 rounded-full object-cover">
+                            <div>
+                                <h4 class="font-bold text-gray-900 text-sm">${p.name}</h4>
+                                <p class="text-xs text-gray-400">এইমাত্র • <i class="fa-solid fa-earth-americas"></i></p>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-ellipsis"></i></button>
+                    </div>
+                    <p class="text-gray-800 text-sm mb-3">${text}</p>
+                    <div class="flex items-center justify-between text-gray-500 text-xs border-t border-b border-gray-100 py-2 my-2">
+                        <span>👍 ১ জন লাইক করেছেন</span>
+                        <span>০ কমেন্ট • ০ শেয়ার</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="toggleLike(this)" class="flex-1 flex items-center justify-center space-x-2 py-2 hover:bg-gray-100 rounded-xl text-gray-600 font-medium text-sm transition">
+                            <i class="fa-regular fa-thumbs-up"></i><span>লাইক</span>
+                        </button>
+                        <button class="flex-1 flex items-center justify-center space-x-2 py-2 hover:bg-gray-100 rounded-xl text-gray-600 font-medium text-sm transition">
+                            <i class="fa-regular fa-comment"></i><span>কমেন্ট</span>
+                        </button>
+                        <button class="flex-1 flex items-center justify-center space-x-2 py-2 hover:bg-gray-100 rounded-xl text-gray-600 font-medium text-sm transition">
+                            <i class="fa-solid fa-share"></i><span>শেয়ার</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('afterbegin', newPostHTML);
+            document.getElementById('new-post-text').value = '';
+            closeCreatePostModal();
+        }
+
+        function toggleLike(btn) {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('fa-regular')) {
+                icon.classList.replace('fa-regular', 'fa-solid');
+                btn.classList.add('text-blue-600');
+            } else {
+                icon.classList.replace('fa-solid', 'fa-regular');
+                btn.classList.remove('text-blue-600');
+            }
+        }
+
+        // Quick Search & Tools
+        function quickSearch(query) {
+            document.getElementById('main-search-input').value = query;
+            alert(`"${query}" সম্পর্কে অনুসন্ধান করা হচ্ছে...`);
+        }
+        function triggerMicSearch() { alert('ভয়েস সার্চ চালু হচ্ছে... অনুগ্রহ করে কথা বলুন।'); }
+        function triggerCameraSearch() { alert('ক্যামেরা স্ক্যানার চালু হচ্ছে...'); }
+
+        // AI Creator
+        function generateAIContent() {
+            const prompt = document.getElementById('ai-prompt-input').value.trim();
+            const resultBox = document.getElementById('ai-result-box');
+            if (!prompt) return alert('অনুগ্রহ করে কিছু প্রম্পট লিখুন।');
+            resultBox.innerHTML = `<b>এআই জেনারেটেড ফলাফল:</b> "${prompt}" বিষয়ের ওপর ভিত্তি করে চমৎকার কন্টেন্ট এবং আইডিয়া প্রস্তুত করা হয়েছে। নাজমুল ক্রিয়েটর স্টুডিওর সাহায্যে এটি এখন ফেসবুকে শেয়ার করতে পারেন!`;
+            resultBox.classList.remove('hidden');
+        }
+
+        function openChatBox(name) {
+            alert(`${name}-এর সাথে চ্যাট উইন্ডো খোলা হচ্ছে...`);
+        }
+
+        window.onload = function() {
+            updateUIProfileInfo();
+        };
+    </script>
+</body>
+</html>
