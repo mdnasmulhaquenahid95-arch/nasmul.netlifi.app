@@ -675,8 +675,16 @@
         // Quick Search & Tools
         function quickSearch(query) {
             document.getElementById('main-search-input').value = query;
-            alert(`"${query}" সম্পর্কে অনুসন্ধান করা হচ্ছে...`);
-        }
+            
+// Search Logic Implementation - filter page content
+const elementsToSearch = document.querySelectorAll('h4, p, span'); // Adjust selectors for items to be searched
+elementsToSearch.forEach(element => {
+    const text = element.textContent.toLowerCase();
+    const isVisible = text.includes(query.toLowerCase());
+    // Hide parent container if element doesn't match
+    element.parentElement.style.display = isVisible ? '' : 'none';
+});
+
         function triggerMicSearch() { alert('ভয়েস সার্চ চালু হচ্ছে... অনুগ্রহ করে কথা বলুন।'); }
         function triggerCameraSearch() { alert('ক্যামেরা স্ক্যানার চালু হচ্ছে...'); }
 
