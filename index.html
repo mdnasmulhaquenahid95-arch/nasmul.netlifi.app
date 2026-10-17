@@ -729,6 +729,8 @@ if (SpeechRecognition) {
         window.onload = function() {
             updateUIProfileInfo();
         };
-    </script>
+    </script> document.getElementById('main-search-input').addEventListener('input', function() {
+    quickSearch(this.value);
+})
 </body>
 </html>
